@@ -1,0 +1,34 @@
+{
+  "name": "@lifebyspot/ts-transform-inject-environment-variables",
+  "version": "1.0.0",
+  "description": "Injects hardcodede environment variables at compile time",
+  "main": "index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/lifebyspot/ts-transform-inject-environment-variables.git"
+  },
+  "keywords": [
+    "ts",
+    "tts",
+    "ttsc",
+    "transformer",
+    "env-vars",
+    "env"
+  ],
+  "author": "Pablo Dorado <pablo@getspot.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lifebyspot/ts-transform-inject-environment-variables/issues"
+  },
+  "homepage": "https://github.com/lifebyspot/ts-transform-inject-environment-variables#readme",
+  "devDependencies": {
+    "@types/node": "^15.12.0",
+    "dotenv": "^10.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
