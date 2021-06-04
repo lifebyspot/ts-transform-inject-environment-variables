@@ -1,12 +1,12 @@
 import 'dotenv/config';
 
-import ts, { SyntaxKind, factory, isBinaryExpression, isElementAccessExpression, isObjectBindingPattern, isPropertyAccessExpression, isVariableDeclaration } from 'typescript';
+import ts, { SyntaxKind, factory, isBinaryExpression, isElementAccessExpression, isObjectBindingPattern, isPropertyAccessExpression, isVariableDeclaration, visitEachChild, visitNode } from 'typescript';
 
 const getEnvironmentVariable = (variableName: string) => process.env[variableName] !== undefined
-    ? factory.createStringLiteral(process.env[variableName], true)
+    ? factory.createStringLiteral(process.env[variableName]!, true)
     : undefined;
 
-const getVariableNames = (expression: ts.BinaryExpression | ts.PropertyAccessExpression | ts.ElementAccessExpression, optionalExpression?: ts.Expression): [string, ts.Expression] => {
+const getVariableNames = (expression: ts.BinaryExpression | ts.PropertyAccessExpression | ts.ElementAccessExpression, optionalExpression?: ts.Expression): [string, ts.Expression?] => {
     let variableName;
     switch (expression.kind) {
         case SyntaxKind.PropertyAccessExpression:
@@ -70,7 +70,7 @@ const getVisitor = (transformationContext: ts.TransformationContext): ts.Visitor
             return node;
         }
 
-        return ts.visitEachChild(node, visitor, transformationContext);
+        return visitEachChild(node, visitor, transformationContext);
     };
 
     return visitor;
@@ -79,7 +79,7 @@ const getVisitor = (transformationContext: ts.TransformationContext): ts.Visitor
 const injectEnvVarsTransform = (_: ts.Program) => (transformationContext: ts.TransformationContext) => (sourceFile: ts.SourceFile) => {
     const visitor = getVisitor(transformationContext);
 
-    const result = ts.visitNode(sourceFile, visitor);
+    const result = visitNode(sourceFile, visitor);
     return result;
 };
 
